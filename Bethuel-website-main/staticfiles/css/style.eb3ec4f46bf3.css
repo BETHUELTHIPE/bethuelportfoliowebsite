@@ -1,0 +1,78 @@
+
+body {
+    background-color: hsl(279, 54%, 37%);
+}
+
+.square-container {
+    width: 150px;  /* Adjust size of the container */
+    height: 150px;  /* Make it square */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #ddd;
+    background-color: #f0f0f0;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.square-image {
+    width: 200%;  /* Set the image to fit within the container */
+    height: 200%;
+    object-fit: cover;
+}
+
+.name {
+    color: #fff;
+}
+
+.title {
+    color: #ff4f4f;
+}
+
+.social_links {
+    overflow: hidden;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.social_links img {
+    width: 50px;  /* Adjust size of social media icons */
+    height: 50px;
+}
+
+body {
+    background-color: rgb(21, 151, 64);
+}
+
+.about_image {
+    width: 100%;
+    max-width: 200px;  /* Limit the image size for larger screens */
+    height: auto;
+    border-radius: 50%;  /* Makes the image circular */
+}
+
+h2 {
+    color: #4fffb0;
+}
+
+.fs-5 {
+    font-size: 18px;  /* Increase readability */
+    line-height: 1.6;
+}
+
+.tech-icon {
+    margin: 15px;  /* Add space between tech stack icons */
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+  .about_image {
+    max-width: 150px;  /* Adjust size of profile image on smaller screens */
+  }
+
+  .fs-5 {
+    font-size: 16px;  /* Adjust text size for readability on small screens */
+  }
+}

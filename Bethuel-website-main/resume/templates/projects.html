@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content1 %}
+<div class="container my-4">
+    <h2 class="text-light text-center mb-4">Projects Fully Completed</h2>
+    <div class="row">
+        {% for project in projects_show %}
+        <div class="col-12 col-md-6 mb-4 d-flex flex-column align-items-center">
+            <!-- Clickable Project Title and Image -->
+            <a href="{{ project.link }}" class="text-decoration-none" target="_blank" rel="noopener noreferrer">
+                <h4 class="text-light text-center"> {{ project.title }} </h4>
+                <img src="{% static project.path %}" class="img-fluid rounded" alt="{{ project.title }}" style="transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';">
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+/* Add hover effect on project titles */
+h4:hover {
+    text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.6);
+}
+
+/* Style the links */
+a {
+    text-decoration: none;
+}
+
+a:hover h4 {
+    text-decoration: underline;
+}
+</style>
+{% endblock content1 %}

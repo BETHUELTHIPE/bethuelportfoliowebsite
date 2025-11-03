@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content1 %}
+<div class="container my-5">
+  <div class="row">
+    <!-- About Image Section -->
+    <div class="col-md-4 d-flex justify-content-center align-items-center">
+      <img src="{% static 'images/Bethuel.jpg' %}" alt="image" class="about_image img-fluid rounded-circle shadow">
+    </div>
+
+ 
+      
+    <!-- About Text Section -->
+    <div class="col-md-7 text-left text-light">
+      <h2 class="display-4">Hello!</h2>
+      <p class="fs-5">
+        My vision is to build software and websites that not only meet technical requirements
+        but also deliver value by improving user experiences and solving complex challenges. 
+        I believe that technology should be both functional and intuitive, and
+        I strive to make that a reality in every project I undertake.
+        Skilled in Python Programming, Django Web Framework, Django REST Framework,
+        Machine Learning, and AWS services. 
+      </p>
+      <p class="fs-5">
+        As a Full Stack Python Developer specializing in Django, I am dedicated to helping others learn
+        Python, Django, and DRF while continuously improving my own programming skills. I
+        have a strong foundation in Python and a deep understanding of its
+        concepts, syntax, and best practices.
+      </p>
+    </div>
+  </div>
+
+  <!-- Tech Stack Section -->
+  <div class="row my-5">
+    <h2 class="text-center" style="color:#4fffb0">My Tech Stack</h2>
+    <div class="d-flex justify-content-around align-items-center flex-wrap">
+      <img src="{% static 'images/html.png' %}" width="70" height="70" alt="HTML Logo" class="img-fluid tech-icon">
+      <img src="{% static 'images/css.png' %}" width="70" height="70" alt="CSS Logo" class="img-fluid tech-icon">
+      <img src="{% static 'images/js.png' %}" width="70" height="70" alt="JavaScript Logo" class="img-fluid tech-icon">
+      <img src="{% static 'images/python.jpg' %}" width="60" height="60" alt="Python Logo" class="img-fluid tech-icon">
+      <img src="{% static 'images/react.png' %}" width="60" height="60" alt="React Logo" class="img-fluid tech-icon">
+      <img src="{% static 'images/download.png' %}" width="70" height="70" alt="Django Logo" class="img-fluid tech-icon">
+    </div>
+  </div>
+</div>
+
+<style>
+.about_image {
+    transition: transform 0.3s;
+}
+
+.about_image:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.tech-icon {
+    transition: transform 0.3s;
+}
+
+.tech-icon:hover {
+    transform: scale(1.1); /* Slight zoom on hover for tech icons */
+}
+
+/* Additional styles for headings */
+h2.display-4 {
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3); /* Text shadow for emphasis */
+}
+
+.fs-5 {
+    line-height: 1.6; /* Better readability */
+}
+</style>
+
+{% endblock content1 %}

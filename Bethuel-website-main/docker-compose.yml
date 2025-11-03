@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: Bethuelresumedb
+      POSTGRES_USER: Bethuel
+      POSTGRES_PASSWORD: 23498812
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+    build: .
+    command: sh -c "python wait_for_db.py && python manage.py migrate && gunicorn portfolio.wsgi:application --bind 0.0.0.0:8000"
+    environment:
+      POSTGRES_DB: Bethuelresumedb
+      POSTGRES_USER: Bethuel
+      POSTGRES_PASSWORD: 23498812
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      DJANGO_SECRET_KEY: "django-insecure-be5c0q(jki!yn*%sz(1te8tx9d8hni&f59%y_y^d7i%8*!@^e("
+      DJANGO_DEBUG: "True"
+    ports:
+      - "8001:8000"
+    depends_on:
+      - db
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+
+volumes:
+  postgres_data:

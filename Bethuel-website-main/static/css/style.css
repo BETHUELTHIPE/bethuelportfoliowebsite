@@ -1,0 +1,281 @@
+
+body {
+    background: #fff !important;
+    color: #000 !important;
+    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    transition: background 0.5s;
+}
+
+.square-container {
+    width: 150px;  /* Adjust size of the container */
+    height: 150px;  /* Make it square */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #ddd;
+    background-color: #f0f0f0;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.square-image {
+    width: 200%;  /* Set the image to fit within the container */
+    height: 200%;
+    object-fit: cover;
+}
+
+.name {
+    color: #fff;
+}
+
+.title {
+    color: #ff4f4f;
+}
+
+.social_links {
+    overflow: hidden;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.social_links img {
+    width: 50px;  /* Adjust size of social media icons */
+    height: 50px;
+}
+
+
+
+.about_image {
+    width: 100%;
+    max-width: 200px;  /* Limit the image size for larger screens */
+    height: auto;
+    border-radius: 50%;  /* Makes the image circular */
+}
+
+h2 {
+    color: #4fffb0;
+}
+
+.fs-5 {
+    font-size: 18px;  /* Increase readability */
+    line-height: 1.6;
+}
+
+.tech-icon {
+    margin: 15px;  /* Add space between tech stack icons */
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+  .about_image {
+    max-width: 150px;  /* Adjust size of profile image on smaller screens */
+  }
+
+  .fs-5 {
+    font-size: 16px;  /* Adjust text size for readability on small screens */
+  }
+}
+
+header.professional-header {
+    background: linear-gradient(90deg, #4f8cff 0%, #6a82fb 100%);
+    color: #fff;
+    padding: 2rem 0 1rem 0;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(79,140,255,0.15);
+    animation: fadeInDown 1s;
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+footer {
+    background: linear-gradient(90deg, #232526 0%, #4f8cff 100%);
+    color: #f4f4f4;
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+    box-shadow: 0 -2px 16px rgba(79,140,255,0.10);
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    animation: fadeInUp 1.2s;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.navbar {
+    background: linear-gradient(90deg, #232526 0%, #4f8cff 100%);
+    box-shadow: 0 2px 12px rgba(79,140,255,0.10);
+    animation: fadeInDown 1s;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 2rem;
+    letter-spacing: 0.05em;
+    color: #fff !important;
+    text-shadow: 0 2px 8px rgba(79,140,255,0.15);
+    transition: color 0.3s;
+}
+
+.navbar-brand:hover {
+    color: #ffc107 !important;
+}
+
+.nav-link {
+    font-size: 1.2rem;
+    color: #f4f4f4 !important;
+    margin-right: 0.7rem;
+    transition: color 0.3s, background 0.3s, transform 0.2s;
+    border-radius: 8px;
+}
+
+.nav-link:hover {
+    color: #ffc107 !important;
+    background: rgba(255,255,255,0.08);
+    transform: scale(1.08);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #000;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-shadow: none;
+}
+
+a {
+    color: #4f8cff;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: #ffc107;
+    text-decoration: underline;
+}
+
+.btn-primary, .btn-success {
+    border-radius: 25px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    box-shadow: 0 2px 8px rgba(79,140,255,0.10);
+    transition: background 0.3s, color 0.3s, transform 0.2s;
+}
+
+.btn-primary:hover, .btn-success:hover {
+    background: #ffc107;
+    color: #232526;
+    transform: scale(1.05);
+}
+
+.footer-social a {
+    display: inline-block;
+    margin: 0 0.5rem;
+    transition: transform 0.3s;
+}
+.footer-social a:hover {
+    transform: scale(1.2) rotate(-5deg);
+}
+
+.footer-links a {
+    color: #f4f4f4;
+    margin: 0 0.7rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.footer-links a:hover {
+    color: #ffc107;
+}
+
+
+/* Card enhancements */
+.card {
+    border-radius: 22px;
+    box-shadow: 0 6px 32px rgba(79,140,255,0.10), 0 1.5px 6px rgba(0,0,0,0.08);
+    background: #232526;
+    color: #f4f4f4;
+    border: none;
+    margin-bottom: 2rem;
+    transition: box-shadow 0.3s, transform 0.2s;
+}
+.card:hover {
+    box-shadow: 0 12px 48px rgba(79,140,255,0.18), 0 3px 12px rgba(0,0,0,0.12);
+    transform: translateY(-4px) scale(1.01);
+}
+
+/* Form enhancements */
+
+.form-control {
+    border-radius: 12px;
+    border: 1.5px solid #bbb;
+    background: #fff;
+    color: #000;
+    font-size: 1.08rem;
+    padding: 0.7rem 1rem;
+    margin-bottom: 0.5rem;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+.form-control:focus {
+    border-color: #4f8cff;
+    box-shadow: 0 0 0 2px rgba(79,140,255,0.10);
+    background: #fff;
+    color: #000;
+}
+
+label, .form-label {
+    color: #000;
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+}
+
+/* Alert/message enhancements */
+.card {
+    border-radius: 18px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    background: #fff;
+    color: #000;
+    border: 1px solid #eee;
+    margin-bottom: 2rem;
+    transition: box-shadow 0.3s, transform 0.2s;
+}
+.card:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    transform: translateY(-2px) scale(1.01);
+}
+.alert-danger, .alert-error {
+    background: linear-gradient(90deg, #ff4f4f 0%, #ffb347 100%);
+    color: #fff;
+}
+.alert-info {
+    background: linear-gradient(90deg, #4f8cff 0%, #b4ec51 100%);
+    color: #232526;
+}
+
+/* Section spacing */
+.container, .container-fluid {
+    padding-top: 2.2rem;
+    padding-bottom: 2.2rem;
+}
+
+/* Button focus for accessibility */
+.btn:focus {
+    outline: 2px solid #ffc107;
+    outline-offset: 2px;
+}
+
+/* Responsive card padding */
+@media (max-width: 768px) {
+  .card {
+    padding: 0.7rem 0.5rem;
+  }
+}
+
+/* ...existing code... */

@@ -1,0 +1,83 @@
+name: Build and Publish Docker Image
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  repository_dispatch:
+    types: [ "trigger-build" ]  # Allow manual triggers from external sources
+
+jobs:
+  build:
+    runs-on: runner-02
+
+    services:
+      db:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: Bethuelresumedb
+          POSTGRES_USER: Bethuel
+          POSTGRES_PASSWORD: 23498812
+        ports:
+          - 5432:5432
+        volumes:
+          - pg_data:/var/lib/postgresql/data
+
+    steps:
+      # Step to check out the code repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step to cache Docker layers
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      # Step to set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Step to log in to Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+
+      # Step to verify Docker login
+      - name: Verify Docker login
+        run: docker info
+
+      # Step to build the Docker image
+      - name: Build Docker image
+        run: docker build --progress=plain . -t bethuelm/portfolio-app:latest
+
+      # Step to list Docker images for debugging purposes
+      - name: List Docker images
+        run: docker images
+
+      # Step to run database migrations
+      - name: Run database migrations
+        run: |
+          docker-compose up -d
+          docker-compose exec web python manage.py migrate
+
+      # Step to run tests inside the Docker container
+      - name: Run tests
+        run: |
+          docker-compose up -d
+          docker-compose exec web python manage.py test
+          docker-compose down
+
+      # Step to get container logs for debugging
+      - name: Get container logs
+        run: docker-compose logs web
+
+      # Step to push the Docker image to Docker Hub
+      - name: Push Docker image to Docker Hub
+        run: docker push bethuelm/portfolio-app:latest

@@ -1,0 +1,52 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block content1 %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <!-- Card Container for Introduction -->
+    <div class="col-12 col-md-6">
+      <div class="card shadow-lg border-0 rounded" style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);">
+        <div class="card-body text-center text-light">
+          <!-- Circular Image -->
+          <img class="profile-image" src="{% static 'images/Graduation photo unisa.jpg' %}" alt="Bethuel Moukangwe's profile picture">
+          
+      
+          
+
+          <!-- Introduction Section -->
+          <h1 class="display-4 mt-3" style="text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);">Bethuel Moukangwe</h1>
+          <h2 class="text-muted" style="text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);">I am a Python-Django Developer</h2>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Circular image styling */
+.profile-image {
+    width: 200px; /* Adjust size as needed */
+    height: 370px; /* Same height and width for a perfect circle */
+    border-radius: 90%; /* Makes the image circular */
+    object-fit: cover; /* Ensures the image covers the area without stretching */
+    transition: transform 0.5s;
+}
+
+.profile-image:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+/* Card hover effect */
+.card {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Lift the card on hover */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Add a shadow effect */
+}
+</style>
+{% endblock content1 %}

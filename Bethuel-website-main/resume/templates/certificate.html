@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content1 %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4" style="color: #4fffb0;">Education</h2>
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <div class="card shadow-sm border-light rounded" style="transition: transform 0.2s;">
+                <div class="card-body">
+                    <h3 class="card-title">BSc - Baccalaureus Scientiae (Physics)</h3>
+                    <p class="card-text">2007 partially completed</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 mb-3">
+            <div class="card shadow-sm border-light rounded" style="transition: transform 0.2s;">
+                <div class="card-body">
+                    <h3 class="card-title">BSc - University of South Africa (Mathematics)</h3>
+                    <p class="card-text">2019 - November</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 mb-3">
+            <div class="card shadow-sm border-light rounded" style="transition: transform 0.2s;">
+                <div class="card-body">
+                    <h3 class="card-title">EXPLOREAI Cape Town South Africa</h3>
+                    <p class="card-text">Data Engineering Course - 09 December 2023</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 mb-3">
+            <div class="card shadow-sm border-light rounded" style="transition: transform 0.2s;">
+                <div class="card-body">
+                    <h3 class="card-title">Udemy - Python-Django</h3>
+                    <p class="card-text">2021 - 2024</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    background-color: #f8f9fa; /* Light background color for the card */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Slightly deeper shadow on hover */
+}
+
+.card-title {
+    font-weight: bold; /* Bold font for the title */
+    color: #333; /* Darker color for better contrast */
+}
+
+.card-text {
+    color: #555; /* Slightly lighter color for text */
+    font-size: 1.1rem; /* Increase font size for better readability */
+}
+</style>
+
+{% endblock content1 %}
