@@ -1,22 +1,26 @@
+FROM python:3.11-slim
 
-# Base Python image
-FROM python:3.10
-
-# Set working directory
 WORKDIR /app
 
-# Install dependencies
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    postgresql-client \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy app code
+# Copy project
 COPY . .
 
-# Copy wait-for-db script
-COPY wait_for_db.py .
+# Create staticfiles directory
+RUN mkdir -p staticfiles
 
-# Expose port
+# Run migrations and collect static files
+RUN python manage.py migrate && python manage.py collectstatic --noinput
+
 EXPOSE 8000
 
-# Command: wait for DB, apply migrations, start Gunicorn
-CMD ["sh", "-c", "python wait_for_db.py && python manage.py migrate && gunicorn portfolio.wsgi:application --bind 0.0.0.0:8000"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "portfolio.wsgi:application"]

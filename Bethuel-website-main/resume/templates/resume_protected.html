@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>📄 Resume Download</h3>
+                </div>
+                <div class="card-body text-center">
+                    {% if user.is_authenticated %}
+                        <h4>Welcome, {{ user.first_name }}!</h4>
+                        <p class="mb-4">You can now download Bethuel's professional resume.</p>
+                        <a href="{% url 'resume' %}" class="btn btn-primary btn-lg">
+                            📥 Download Resume (PDF)
+                        </a>
+                    {% else %}
+                        <h4>Authentication Required</h4>
+                        <p class="mb-4">Please register and verify your email to download the resume.</p>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                            <a href="{% url 'register' %}" class="btn btn-success me-md-2">
+                                📝 Register
+                            </a>
+                            <a href="{% url 'login' %}" class="btn btn-primary">
+                                🔐 Login
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

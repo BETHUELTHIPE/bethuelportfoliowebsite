@@ -13,6 +13,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
+from django.core.cache import cache
 
 
 # Home view
@@ -119,7 +120,18 @@ def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            form.save()  # Save the form data to the database
+            contact_obj = form.save()  # Save the form data to the database
+            
+            # Process contact form asynchronously
+            from .tasks import process_contact_form
+            process_contact_form.delay(
+                contact_obj.name,
+                contact_obj.email,
+                contact_obj.phone,
+                contact_obj.message
+            )
+            
+            messages.success(request, 'Thank you for your message! We will get back to you soon.')
             return redirect('success')  # Redirect to a success page
     else:
         form = ContactForm()
@@ -128,9 +140,24 @@ def contact(request):
 
 
 
-# Resume download view (login required)
+# Resume download view (verified login required)
 @login_required(login_url='/login/')
 def resume(request):
+    # Check if user is verified
+    if not request.user.is_active:
+        messages.error(request, 'Please verify your email before downloading the resume.')
+        return redirect('resend_verification')
+    
+    # Check if user has verified email
+    try:
+        verification = EmailVerification.objects.get(user=request.user)
+        if not verification.is_verified:
+            messages.error(request, 'Please verify your email before downloading the resume.')
+            return redirect('resend_verification')
+    except EmailVerification.DoesNotExist:
+        messages.error(request, 'Email verification required. Please complete registration.')
+        return redirect('register')
+    
     resume_path = "myapp/resume.pdf"
     if staticfiles_storage.exists(resume_path):
         with staticfiles_storage.open(resume_path, 'rb') as resume_file:
@@ -140,14 +167,12 @@ def resume(request):
                 content_type="application/pdf"
             )
             response['Content-Disposition'] = (
-                'attachment; filename="resume.pdf"'
+                'attachment; filename="Bethuel_Moukangwe_Resume.pdf"'
             )
             return response
     else:
-        return HttpResponse(
-            "Resume not found",
-            status=404
-        )
+        messages.error(request, 'Resume file not found. Please contact administrator.')
+        return redirect('home')
 
 
 
@@ -170,14 +195,14 @@ def register(request):
                 f"If you did not register, please ignore this email.\n\n"
                 f"Best regards,\nBethuel Portfolio Team"
             )
-            from_email = settings.EMAIL_HOST_USER or 'noreply@bethuelportfolio.com'
-            send_mail(
-                subject,
-                message,
-                from_email,
-                [user.email],
-                fail_silently=False,
-            )
+            from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'noreply@bethuelportfolio.com')
+            # Send verification email asynchronously
+            from .tasks import send_verification_email
+            try:
+                send_verification_email.delay(user.id, verification_url)
+                messages.success(request, 'Registration successful! Please check your email to verify your account.')
+            except Exception as e:
+                messages.warning(request, f'Registration successful, but email could not be sent. Error: {str(e)}')
             return redirect('registration_success')
     else:
         form = CustomUserCreationForm()
@@ -216,9 +241,13 @@ def resend_verification(request):
                     f"If you did not register, please ignore this email.\n\n"
                     f"Best regards,\nBethuel Portfolio Team"
                 )
-                from_email = settings.EMAIL_HOST_USER or 'noreply@bethuelportfolio.com'
-                send_mail(subject, message, from_email, [user.email], fail_silently=False)
-                return render(request, 'check_email.html', {'email': user.email, 'resent': True})
+                from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'noreply@bethuelportfolio.com')
+                try:
+                    send_mail(subject, message, from_email, [user.email], fail_silently=False)
+                    messages.success(request, 'Verification email sent successfully!')
+                    return render(request, 'check_email.html', {'email': user.email, 'resent': True})
+                except Exception as e:
+                    messages.error(request, f'Could not send email. Error: {str(e)}')
             else:
                 messages.info(request, 'This account is already active. Please login.')
         except User.DoesNotExist:
@@ -233,10 +262,23 @@ class CustomLoginView(LoginView):
     def form_valid(self, form):
         user = form.get_user()
         if not user.is_active:
-            messages.error(self.request, 'Please verify your email before logging in. <a href="/resend-verification/">Resend verification email</a>.')
+            messages.error(
+                self.request, 
+                'Please verify your email before logging in. '
+                '<a href="/resend-verification/">Resend verification email</a>.'
+            )
             return self.form_invalid(form)
+        messages.success(self.request, f'Welcome back, {user.first_name}!')
         return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        messages.error(self.request, 'Invalid username or password.')
+        return super().form_invalid(form)
 
+
+# Resume page view
+def resume_page(request):
+    return render(request, 'resume_protected.html')
 
 # Success view
 def success_view(request):

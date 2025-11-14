@@ -1,38 +1,122 @@
+version: '3.8'
+
 services:
+  # PostgreSQL Database
   db:
-    image: postgres:17
+    image: postgres:15-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
     environment:
-      POSTGRES_DB: Bethuelresumedb
-      POSTGRES_USER: Bethuel
-      POSTGRES_PASSWORD: 23498812
+      POSTGRES_DB: bethuel_portfolio
+      POSTGRES_USER: bethuel
+      POSTGRES_PASSWORD: bethuel123
     ports:
       - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
 
+  # Redis Cache & Message Broker
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
+  # Django Web Application
   web:
     build: .
-    command: sh -c "python wait_for_db.py && python manage.py migrate && gunicorn portfolio.wsgi:application --bind 0.0.0.0:8000"
-    environment:
-      POSTGRES_DB: Bethuelresumedb
-      POSTGRES_USER: Bethuel
-      POSTGRES_PASSWORD: 23498812
-      POSTGRES_HOST: db
-      POSTGRES_PORT: 5432
-      DJANGO_SECRET_KEY: "django-insecure-be5c0q(jki!yn*%sz(1te8tx9d8hni&f59%y_y^d7i%8*!@^e("
-      DJANGO_DEBUG: "True"
-    ports:
-      - "8001:8000"
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
+             python manage.py setup_project &&
+             gunicorn portfolio.wsgi:application --bind 0.0.0.0:8000 --workers 3"
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    expose:
+      - "8000"
     depends_on:
       - db
+      - redis
+    environment:
+      - POSTGRES_DB=bethuel_portfolio
+      - POSTGRES_USER=bethuel
+      - POSTGRES_PASSWORD=bethuel123
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - REDIS_URL=redis://redis:6379/0
+      - DJANGO_DEBUG=False
+      - DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
+    restart: unless-stopped
 
+  # Celery Worker
+  celery:
+    build: .
+    command: celery -A portfolio worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+    environment:
+      - POSTGRES_DB=bethuel_portfolio
+      - POSTGRES_USER=bethuel
+      - POSTGRES_PASSWORD=bethuel123
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - REDIS_URL=redis://redis:6379/0
+    restart: unless-stopped
+
+  # Celery Beat (Scheduler)
+  celery-beat:
+    build: .
+    command: celery -A portfolio beat --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+    environment:
+      - POSTGRES_DB=bethuel_portfolio
+      - POSTGRES_USER=bethuel
+      - POSTGRES_PASSWORD=bethuel123
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - REDIS_URL=redis://redis:6379/0
+    restart: unless-stopped
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    depends_on:
+      - web
+    restart: unless-stopped
+
+  # pgAdmin Database Management
   pgadmin:
     image: dpage/pgadmin4
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_DEFAULT_EMAIL: admin@bethuel.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
     ports:
       - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - db
+    restart: unless-stopped
 
 volumes:
   postgres_data:
+  redis_data:
+  static_volume:
+  media_volume:
+  pgadmin_data:

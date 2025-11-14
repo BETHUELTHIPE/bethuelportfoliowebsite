@@ -1,0 +1,3 @@
+Retrieving logs...
+Logs were saved to C:\Users\Bethuel\Downloads\Bethuel-website-main\Bethuel-website-main\.elasticbeanstalk\logs\251104_190633
+Logs were saved to C:\Users\Bethuel\Downloads\Bethuel-website-main\Bethuel-website-main\.elasticbeanstalk\logs\251104_190633

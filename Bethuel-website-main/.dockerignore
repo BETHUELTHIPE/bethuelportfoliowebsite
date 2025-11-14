@@ -1,0 +1,18 @@
+# .dockerignore
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.log
+*.env
+env/
+venv/
+node_modules/
+.git/
+.gitignore
+.ebextensions/
+media/
+staticfiles/
+*.zip
