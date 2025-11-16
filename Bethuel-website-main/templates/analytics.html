@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %}Analytics Dashboard{% endblock %}
+{% block content1 %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div class="container">
+    <h2 class="mb-4">Analytics Dashboard</h2>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5>Activity Overview</h5>
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5>Statistics</h5>
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5>Trend Over Time</h5>
+                    <canvas id="lineChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+// Pie Chart
+new Chart(document.getElementById('pieChart'), {
+    type: 'pie',
+    data: {
+        labels: ['Users', 'Downloads', 'Messages'],
+        datasets: [{
+            data: [{{ total_users }}, {{ resume_downloads }}, {{ contact_messages }}],
+            backgroundColor: ['#2563eb', '#059669', '#d97706']
+        }]
+    }
+});
+// Bar Chart
+new Chart(document.getElementById('barChart'), {
+    type: 'bar',
+    data: {
+        labels: ['Users', 'Downloads', 'Messages'],
+        datasets: [{
+            data: [{{ total_users }}, {{ resume_downloads }}, {{ contact_messages }}],
+            backgroundColor: ['#2563eb', '#059669', '#d97706']
+        }]
+    }
+});
+// Line Chart
+new Chart(document.getElementById('lineChart'), {
+    type: 'line',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+            label: 'Activity',
+            data: [10, 20, 15, 25, 30, {{ total_users }}],
+            borderColor: '#2563eb',
+            fill: false
+        }]
+    }
+});
+</script>
+{% endblock %}

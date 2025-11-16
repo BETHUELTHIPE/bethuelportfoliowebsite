@@ -1,0 +1,179 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block content1 %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <!-- Card Container for Introduction -->
+    <div class="col-12 col-md-6 fade-in">
+      <div class="card shadow-lg border-0 rounded scale-in" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);">
+        <div class="card-body text-center text-light">
+          <!-- Circular Image -->
+          <img class="profile-image pulse" src="{% static 'images/Graduation photo unisa.jpg' %}" alt="Bethuel Moukangwe's profile picture">
+          
+          <!-- Introduction Section -->
+          <h1 class="display-4 mt-3 slide-in-left" style="text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);">Bethuel Moukangwe</h1>
+          <h2 class="text-light slide-in-right fade-in-delay-1" style="text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);">Director - AmarisLearningHub</h2>
+          <h3 class="text-light slide-in-right fade-in-delay-2" style="text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); font-size: 1.2rem;">Python (Django) Developer & Online Maths Tutor</h3>
+          
+          <!-- Call to Action Buttons -->
+          <div class="mt-4 fade-in-delay-2">
+            <a href="{% url 'projects' %}" class="btn btn-primary me-2">View Projects</a>
+            <a href="{% url 'resume_page' %}" class="btn btn-warning me-2">📄 Download Resume</a>
+            <a href="{% url 'contact' %}" class="btn btn-success">Get In Touch</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Skills Section -->
+  <div class="row mt-5">
+    <div class="col-12">
+      <h3 class="text-center mb-4 fade-in">Core Technologies</h3>
+      <div class="row text-center">
+        <div class="col-md-3 mb-3 fade-in-delay-1">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5>Python</h5>
+              <p class="text-muted">Django, Flask, FastAPI</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 mb-3 fade-in-delay-2">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5>Backend Development</h5>
+              <p class="text-muted">APIs, Databases</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 mb-3 fade-in-delay-3">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5>Web Development</h5>
+              <p class="text-muted">HTML, CSS, JavaScript</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 mb-3 fade-in-delay-3">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5>Education</h5>
+              <p class="text-muted">Mathematics, Physics</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Testimonials Section -->
+  {% if testimonials %}
+  <div class="row mt-5">
+    <div class="col-12">
+      <h3 class="text-center mb-4 fade-in">💬 What People Say</h3>
+      <div class="row">
+        {% for testimonial in testimonials %}
+        <div class="col-md-4 mb-3 fade-in-delay-{{ forloop.counter }}">
+          <div class="card h-100 testimonial-card">
+            <div class="card-body text-center">
+              <div class="stars mb-2">
+                {% for i in "12345" %}
+                  {% if forloop.counter <= testimonial.rating %}
+                    ⭐
+                  {% endif %}
+                {% endfor %}
+              </div>
+              <p class="card-text">"{{ testimonial.content }}"</p>
+              <footer class="blockquote-footer">
+                <strong>{{ testimonial.name }}</strong><br>
+                <small>{{ testimonial.position }} at {{ testimonial.company }}</small>
+              </footer>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  
+  <!-- Recent Blog Posts -->
+  {% if recent_posts %}
+  <div class="row mt-5">
+    <div class="col-12">
+      <h3 class="text-center mb-4 fade-in">📝 Latest Insights</h3>
+      <div class="row">
+        {% for post in recent_posts %}
+        <div class="col-md-4 mb-3 fade-in-delay-{{ forloop.counter }}">
+          <div class="card h-100">
+            <div class="card-body">
+              <h6 class="card-title">{{ post.title }}</h6>
+              <p class="card-text small">{{ post.excerpt|truncatewords:15 }}</p>
+              <a href="{% url 'blog_detail' post.slug %}" class="btn btn-sm btn-outline-primary">Read More</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="text-center mt-3">
+        <a href="{% url 'blog_list' %}" class="btn btn-primary">View All Posts</a>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  
+  <!-- Newsletter Subscription -->
+  <div class="row mt-5">
+    <div class="col-12">
+      <div class="card bg-primary text-white">
+        <div class="card-body text-center">
+          <h4>📧 Stay Updated!</h4>
+          <p class="mb-3">Subscribe to receive announcements about new projects, blog posts, and career updates.</p>
+          <a href="{% url 'subscribe' %}" class="btn btn-light btn-lg">
+            🔔 Subscribe to Newsletter
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Circular image styling */
+.profile-image {
+    width: 200px; /* Adjust size as needed */
+    height: 370px; /* Same height and width for a perfect circle */
+    border-radius: 90%; /* Makes the image circular */
+    object-fit: cover; /* Ensures the image covers the area without stretching */
+    transition: transform 0.5s;
+}
+
+.profile-image:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+/* Card hover effect */
+.card {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Lift the card on hover */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Add a shadow effect */
+}
+
+/* Testimonial card styling */
+.testimonial-card {
+    border-left: 4px solid #007bff;
+    transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+    border-left-color: #28a745;
+    transform: translateY(-3px);
+}
+</style>
+{% endblock content1 %}

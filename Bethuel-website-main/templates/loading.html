@@ -1,0 +1,34 @@
+<!-- Loading Screen -->
+<div id="loading-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    <div class="spinner-border text-light" role="status" style="width: 3rem; height: 3rem;">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+    <h4 class="text-light mt-3">Loading Portfolio...</h4>
+    <div class="progress mt-3" style="width: 300px;">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const loadingScreen = document.getElementById('loading-screen');
+    const progressBar = document.querySelector('.progress-bar');
+    
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += Math.random() * 30;
+        if (progress > 100) progress = 100;
+        progressBar.style.width = progress + '%';
+        
+        if (progress >= 100) {
+            clearInterval(interval);
+            setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }, 500);
+        }
+    }, 200);
+});
+</script>

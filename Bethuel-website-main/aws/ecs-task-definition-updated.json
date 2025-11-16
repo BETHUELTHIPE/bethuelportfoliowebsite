@@ -1,0 +1,49 @@
+{
+  "family": "bethuel-portfolio-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::981814817456:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "bethuel-portfolio-web",
+      "image": "981814817456.dkr.ecr.us-east-1.amazonaws.com/bethuel-portfolio:latest",
+      "portMappings": [
+        {
+          "containerPort": 8000,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true,
+      "environment": [
+        {
+          "name": "DJANGO_DEBUG",
+          "value": "False"
+        },
+        {
+          "name": "DJANGO_ALLOWED_HOSTS",
+          "value": "*"
+        }
+      ],
+      "secrets": [
+        {
+          "name": "DJANGO_SECRET_KEY",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:981814817456:secret:bethuel-portfolio-secrets:DJANGO_SECRET_KEY::"
+        },
+        {
+          "name": "EMAIL_HOST_PASSWORD",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:981814817456:secret:bethuel-portfolio-secrets:EMAIL_HOST_PASSWORD::"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/bethuel-portfolio",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}

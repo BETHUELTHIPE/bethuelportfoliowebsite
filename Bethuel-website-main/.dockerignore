@@ -1,18 +1,9 @@
-# .dockerignore
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.db
-*.sqlite3
-*.log
-*.env
 env/
-venv/
-node_modules/
+.env
+*.pyc
+__pycache__/
 .git/
 .gitignore
-.ebextensions/
-media/
-staticfiles/
-*.zip
+README.md
+.vscode/
+node_modules/

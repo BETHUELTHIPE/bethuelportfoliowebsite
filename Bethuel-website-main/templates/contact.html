@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content1 %}
+<div class="container my-5">
+    <div class="row">
+        <!-- Contact Information Section -->
+        <div class="col-md-4 text-center my-5 text-light">
+            <h1 class="mt-5">Stay Connected</h1>
+            <h3 class="mt-3">bethuelthipe@gmail.com</h3>
+            <h3 class="mt-3">Call me: 071 415 6665</h3>
+
+            <!-- WhatsApp Button with Image -->
+            <a href="https://wa.me/27714156665" target="_blank" class="btn btn-success mt-3">
+                <img src="{% static 'images/whatsapp.png' %}" alt="WhatsApp Logo" style="width: 30px; margin-right: 10px;">
+                Chat with me on WhatsApp
+            </a>
+        </div>
+
+        <!-- Contact Form Section -->
+        <div class="col-md-7 offset-md-1 mt-3">
+            <div class="form-container p-4 bg-light rounded shadow">
+                <form method="post" action="{% url 'contact' %}">
+                    {% csrf_token %}
+                    <!-- Form fields -->
+                    <div class="form-group m-3">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group m-3">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group m-3">
+                        <label for="phone">Cell</label>
+                        <input type="tel" class="form-control" name="phone" id="phone" placeholder="Your Cell Number" required minlength="10">
+                    </div>
+                    <div class="form-group m-3">
+                        <label for="msg">Message</label>
+                        <textarea class="form-control" name="message" id="msg" rows="3" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Google Map Section -->
+    <div class="row my-5">
+        <div class="col-12">
+            <h2 class="text-center text-light">My Location</h2>
+            <div class="d-flex justify-content-center align-items-center mt-4">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3584.4619515562636!2d28.220475073844767!3d-26.051155157755396!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e956b69f35fd8db%3A0xefbdf12fa2be85c0!2s2%20Erasmus%20St%2C%20Norkem%20Park%2C%20Kempton%20Park%2C%201618!5e0!3m2!1sen!2sza!4v1729363576022!5m2!1sen!2sza" 
+                    width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

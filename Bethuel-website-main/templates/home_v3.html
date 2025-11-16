@@ -1,0 +1,440 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content1 %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center min-vh-100">
+            <div class="col-lg-6">
+                <div class="hero-content">
+                    <h1 class="hero-title">Bethuel Moukangwe</h1>
+                    <h2 class="hero-subtitle">Full-Stack Developer & Educator</h2>
+                    <p class="hero-description">Building innovative web solutions and empowering the next generation through technology education.</p>
+                    <div class="hero-buttons">
+                        <a href="{% url 'projects' %}" class="btn btn-primary btn-lg">View Projects</a>
+                        <a href="{% url 'contact' %}" class="btn btn-outline-light btn-lg">Get In Touch</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-image">
+                    <img src="{% static 'images/Graduation photo unisa.jpg' %}" alt="Bethuel Moukangwe" class="profile-img">
+                    <div class="floating-elements">
+                        <div class="float-element python">Python</div>
+                        <div class="float-element django">Django</div>
+                        <div class="float-element js">JavaScript</div>
+                        <div class="float-element aws">AWS</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section class="skills-section py-5">
+    <div class="container">
+        <h2 class="section-title">Technical Expertise</h2>
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="skill-card">
+                    <div class="skill-icon">🐍</div>
+                    <h4>Python</h4>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="95%"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="skill-card">
+                    <div class="skill-icon">🌐</div>
+                    <h4>Django</h4>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="90%"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="skill-card">
+                    <div class="skill-icon">☁️</div>
+                    <h4>AWS</h4>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="85%"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="skill-card">
+                    <div class="skill-icon">📊</div>
+                    <h4>Data Science</h4>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="80%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Preview -->
+<section class="projects-preview py-5">
+    <div class="container">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="{% static 'images/serverless_DESIGN_project.png' %}" alt="Cloud Computing Project">
+                    </div>
+                    <div class="project-content">
+                        <h4>Cloud Computing Platform</h4>
+                        <p>Serverless architecture with AWS Lambda and API Gateway</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">AWS</span>
+                            <span class="tech-tag">Lambda</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="{% static 'images/Streaming data.png' %}" alt="Data Pipeline Project">
+                    </div>
+                    <div class="project-content">
+                        <h4>Big Data Pipeline</h4>
+                        <p>Real-time data processing with Apache Airflow</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Airflow</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">ETL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="{% static 'images/end-to-end-pipeline.jpg' %}" alt="ETL Pipeline">
+                    </div>
+                    <div class="project-content">
+                        <h4>ETL Data Pipeline</h4>
+                        <p>End-to-end data processing and analytics solution</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">SQL</span>
+                            <span class="tech-tag">Analytics</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <a href="{% url 'projects' %}" class="btn btn-primary btn-lg">View All Projects</a>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section py-5">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3 mb-4">
+                <div class="stat-item">
+                    <div class="stat-number" data-count="50">0</div>
+                    <div class="stat-label">Projects Completed</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="stat-item">
+                    <div class="stat-number" data-count="5">0</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="stat-item">
+                    <div class="stat-number" data-count="100">0</div>
+                    <div class="stat-label">Students Taught</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="stat-item">
+                    <div class="stat-number" data-count="10">0</div>
+                    <div class="stat-label">Technologies</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section py-5">
+    <div class="container text-center">
+        <h2>Ready to Start Your Next Project?</h2>
+        <p class="lead">Let's collaborate and bring your ideas to life with cutting-edge technology.</p>
+        <div class="cta-buttons">
+            <a href="{% url 'contact' %}" class="btn btn-primary btn-lg me-3">Start a Project</a>
+            <a href="{% url 'resume_page' %}" class="btn btn-outline-primary btn-lg">Download Resume</a>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    animation: slideInLeft 1s ease-out;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 1.5rem;
+    animation: slideInRight 1s ease-out 0.2s both;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    animation: fadeInUp 1s ease-out 0.4s both;
+}
+
+.hero-buttons {
+    animation: fadeInUp 1s ease-out 0.6s both;
+}
+
+.hero-image {
+    position: relative;
+    text-align: center;
+}
+
+.profile-img {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid rgba(255,255,255,0.3);
+    animation: fadeIn 1s ease-out 0.8s both;
+}
+
+.floating-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.float-element {
+    position: absolute;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    animation: float 3s ease-in-out infinite;
+}
+
+.python { top: 20%; left: 10%; animation-delay: 0s; }
+.django { top: 30%; right: 15%; animation-delay: 1s; }
+.js { bottom: 30%; left: 5%; animation-delay: 2s; }
+.aws { bottom: 20%; right: 10%; animation-delay: 3s; }
+
+/* Skills Section */
+.skills-section {
+    background: #f8f9fa;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    color: #333;
+}
+
+.skill-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.skill-card:hover {
+    transform: translateY(-10px);
+}
+
+.skill-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.skill-bar {
+    background: #e9ecef;
+    height: 8px;
+    border-radius: 4px;
+    margin-top: 1rem;
+    overflow: hidden;
+}
+
+.skill-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    width: 0;
+    transition: width 2s ease-out;
+}
+
+/* Projects Preview */
+.projects-preview {
+    background: white;
+}
+
+.project-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+}
+
+.project-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.project-content {
+    padding: 1.5rem;
+}
+
+.tech-tag {
+    background: #e9ecef;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
+}
+
+/* Stats Section */
+.stats-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* CTA Section */
+.cta-section {
+    background: #f8f9fa;
+}
+
+/* Animations */
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-title { font-size: 2.5rem; }
+    .profile-img { width: 200px; height: 200px; }
+    .float-element { display: none; }
+}
+</style>
+
+<script>
+// Animate skill bars on scroll
+const observerOptions = {
+    threshold: 0.5,
+    rootMargin: '0px 0px -100px 0px'
+};
+
+const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const progressBars = entry.target.querySelectorAll('.skill-progress');
+            progressBars.forEach(bar => {
+                bar.style.width = bar.dataset.width;
+            });
+        }
+    });
+}, observerOptions);
+
+document.addEventListener('DOMContentLoaded', () => {
+    const skillsSection = document.querySelector('.skills-section');
+    if (skillsSection) {
+        skillObserver.observe(skillsSection);
+    }
+
+    // Animate counters
+    const counters = document.querySelectorAll('.stat-number');
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                const target = parseInt(counter.dataset.count);
+                let current = 0;
+                const increment = target / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    counter.textContent = Math.floor(current);
+                    if (current >= target) {
+                        counter.textContent = target;
+                        clearInterval(timer);
+                    }
+                }, 40);
+                counterObserver.unobserve(counter);
+            }
+        });
+    }, observerOptions);
+
+    counters.forEach(counter => counterObserver.observe(counter));
+});
+</script>
+{% endblock content1 %}

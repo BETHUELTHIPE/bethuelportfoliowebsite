@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h2>📊 Analytics Dashboard</h2>
+            <p class="text-muted">Portfolio website analytics and statistics</p>
+        </div>
+    </div>
+    
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5>👥 Total Users</h5>
+                    <h3>{{ total_users }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5>✅ Verified Users</h5>
+                    <h3>{{ verified_users }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5>📄 Total Downloads</h5>
+                    <h3>{{ total_downloads }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <h5>📅 Downloads Today</h5>
+                    <h3>{{ downloads_today }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Registration Chart -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>📈 Daily Registrations (Last 30 Days)</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="registrationChart" width="400" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Recent Downloads -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>📥 Recent Resume Downloads</h5>
+                </div>
+                <div class="card-body">
+                    {% if recent_downloads %}
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Email</th>
+                                        <th>Download Time</th>
+                                        <th>IP Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for download in recent_downloads %}
+                                    <tr>
+                                        <td>{{ download.user.first_name }} {{ download.user.last_name }}</td>
+                                        <td>{{ download.user.email }}</td>
+                                        <td>{{ download.downloaded_at|date:"M d, Y H:i" }}</td>
+                                        <td>{{ download.ip_address|default:"N/A" }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="text-muted">No downloads yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Registration Chart
+const ctx = document.getElementById('registrationChart').getContext('2d');
+const registrationChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: [
+            {% for data in registration_data %}
+                '{{ data.date|date:"M d" }}'{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ],
+        datasets: [{
+            label: 'Daily Registrations',
+            data: [
+                {% for data in registration_data %}
+                    {{ data.count }}{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ],
+            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            tension: 0.1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1
+                }
+            }
+        }
+    }
+});
+</script>
+{% endblock %}

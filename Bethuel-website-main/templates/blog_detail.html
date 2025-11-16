@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <article class="blog-post">
+                <header class="mb-4">
+                    <h1>{{ post.title }}</h1>
+                    <div class="text-muted mb-3">
+                        📅 {{ post.created_at|date:"F d, Y" }} • 👁️ {{ post.views }} views
+                    </div>
+                    {% if post.featured_image %}
+                    <img src="{{ post.featured_image }}" class="img-fluid rounded mb-4" alt="{{ post.title }}">
+                    {% endif %}
+                </header>
+                
+                <div class="blog-content">
+                    {{ post.content|linebreaks }}
+                </div>
+                
+                <footer class="mt-5 pt-4 border-top">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="{% url 'blog_list' %}" class="btn btn-outline-primary">← Back to Blog</a>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <small class="text-muted">Last updated: {{ post.updated_at|date:"M d, Y" }}</small>
+                        </div>
+                    </div>
+                </footer>
+            </article>
+        </div>
+    </div>
+</div>
+{% endblock %}

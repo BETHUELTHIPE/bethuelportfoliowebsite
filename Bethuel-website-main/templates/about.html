@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}About - Bethuel Moukangwe{% endblock %}
+{% block content1 %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="photo-container mb-3">
+                        <img src="{% static 'images/Graduation photo unisa.jpg' %}" alt="Bethuel Moukangwe" class="profile-image">
+                    </div>
+                    <h4>Bethuel Moukangwe</h4>
+                    <p class="text-muted">Python-Django Developer | Maths Tutor</p>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/bethuel-moukangwe-93976a1a3" class="btn btn-outline-primary btn-sm">LinkedIn</a>
+                        <a href="https://github.com/BETHUELTHIPE/" class="btn btn-outline-dark btn-sm">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="mb-4">About Me</h2>
+                    <p class="lead">Passionate Python-Django developer and mathematics educator with expertise in building scalable web applications and teaching complex mathematical concepts.</p>
+                    
+                    <h4 class="mt-4">Professional Background</h4>
+                    <p>I specialize in developing robust web applications using Django framework, with a strong foundation in Python programming. My dual expertise in technology and education allows me to create innovative solutions while sharing knowledge through mathematics tutoring.</p>
+                    
+                    <h4 class="mt-4">Technical Skills</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li><strong>Languages:</strong> Python, JavaScript, HTML, CSS</li>
+                                <li><strong>Frameworks:</strong> Django, Flask, Bootstrap</li>
+                                <li><strong>Databases:</strong> PostgreSQL, SQLite, MySQL</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li><strong>Tools:</strong> Docker, Git, Redis, Celery</li>
+                                <li><strong>Cloud:</strong> AWS, Digital Ocean</li>
+                                <li><strong>Education:</strong> Mathematics, Physics</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h4 class="mt-4">Education & Tutoring</h4>
+                    <p>As a mathematics tutor, I help students understand complex mathematical concepts through clear explanations and practical examples. My teaching approach combines theoretical knowledge with real-world applications.</p>
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'contact' %}" class="btn btn-primary">Get In Touch</a>
+                        <a href="{% url 'projects' %}" class="btn btn-outline-primary">View Projects</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.photo-container {
+    width: 250px;
+    height: 300px;
+    margin: 0 auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    background: #f8f9fa;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border: none !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Get Resume via Email{% endblock %}
+{% block content1 %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-center mb-4">Get Resume via Email</h3>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" name="email" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Send Resume</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content1 %}
+<div class="container my-4">
+    <h2 class="text-center mb-4" style="color: #4fffb0;">Experience</h2>
+    <div class="row">
+        {% for eachitem in experience %}
+            <div class="col-md-12 mb-3">
+                <div class="card shadow-sm border-light rounded" style="transition: transform 0.2s;">
+                    <div class="card-body">
+                        <h3 class="card-title">{{ eachitem.company }}</h3>
+                        <p class="card-text">{{ eachitem.position }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+.card {
+    background-color: #f8f9fa; /* Light background color for the card */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Slightly deeper shadow on hover */
+}
+
+.card-title {
+    font-weight: bold; /* Bold font for company name */
+    color: #333; /* Darker color for better contrast */
+}
+
+.card-text {
+    color: #555; /* Slightly lighter color for position text */
+    font-size: 1.1rem; /* Increase font size for better readability */
+}
+</style>
+
+{% endblock content1 %}

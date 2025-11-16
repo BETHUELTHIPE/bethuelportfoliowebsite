@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12 text-center mb-5">
+            <h1>📝 Blog & Insights</h1>
+            <p class="lead">Sharing knowledge and experiences in technology</p>
+        </div>
+    </div>
+    
+    <div class="row">
+        {% for post in posts %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                {% if post.featured_image %}
+                <img src="{{ post.featured_image }}" class="card-img-top" alt="{{ post.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">{{ post.excerpt }}</p>
+                    <small class="text-muted">
+                        📅 {{ post.created_at|date:"M d, Y" }} • 👁️ {{ post.views }} views
+                    </small>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'blog_detail' post.slug %}" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p class="text-muted">No blog posts available yet.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

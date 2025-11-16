@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>📧 Subscribe to Newsletter</h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-center mb-4">
+                        Stay updated with my latest projects, blog posts, and career announcements!
+                    </p>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">Email Address *</label>
+                            {{ form.email }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.name.id_for_label }}" class="form-label">Name (Optional)</label>
+                            {{ form.name }}
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">
+                                🔔 Subscribe Now
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div class="text-center mt-3">
+                        <small class="text-muted">
+                            You can unsubscribe anytime. We respect your privacy.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

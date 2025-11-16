@@ -16,10 +16,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 # For local development we read from the environment and fall back to a short
 # dev key to avoid extremely long literal lines that trip linters.
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', get_random_secret_key())
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+
+if not SECRET_KEY and not DEBUG:
+    raise ValueError("Missing DJANGO_SECRET_KEY environment variable")
+
+if not SECRET_KEY:
+    SECRET_KEY = get_random_secret_key()
 
 # DEBUG setting
-DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
+DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
 
 # Security settings for production
 if not DEBUG:
@@ -31,12 +37,21 @@ if not DEBUG:
     SECURE_HSTS_PRELOAD = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    SECURE_SSL_REDIRECT = False  # Set to True when using HTTPS
+    SECURE_SSL_REDIRECT = not DEBUG  # Set to True when using HTTPS
+
 
 # Allowed hosts
-ALLOWED_HOSTS = os.getenv(
-    'DJANGO_ALLOWED_HOSTS', '*'
-).split(',')
+ALLOWED_HOSTS = [
+    'localhost',
+    '.localhost',
+    '127.0.0.1',
+]
+
+# Add production domain from environment variable
+PRODUCTION_HOST = os.getenv('DJANGO_ALLOWED_HOSTS')
+if PRODUCTION_HOST:
+    ALLOWED_HOSTS.append(PRODUCTION_HOST)
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -87,16 +102,28 @@ TEMPLATES = [
 WSGI_APPLICATION = 'portfolio.wsgi.application'
 
 # Database configuration
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB', 'bethuel_portfolio'),
-        'USER': os.getenv('POSTGRES_USER', 'bethuel'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'bethuel123'),
-        'HOST': os.getenv('POSTGRES_HOST', 'db'),
-        'PORT': os.getenv('POSTGRES_PORT', '5432'),
+if not DEBUG and not os.getenv('POSTGRES_HOST'):
+    raise ValueError("POSTGRES_HOST must be set in production")
+
+if os.getenv('POSTGRES_HOST'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('POSTGRES_DB', 'bethuel_portfolio'),
+            'USER': os.getenv('POSTGRES_USER', 'bethuel'),
+            'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'bethuel123'),
+            'HOST': os.getenv('POSTGRES_HOST', 'db'),
+            'PORT': os.getenv('POSTGRES_PORT', '5432'),
+        }
     }
-}
+else:
+    # Fallback to SQLite for build-time operations
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # Redis Configuration
 REDIS_URL = os.getenv('REDIS_URL', 'redis://redis:6379/0')
@@ -175,25 +202,21 @@ STATICFILES_DIRS = [
 
 # Compression and caching
 if not DEBUG:
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     WHITENOISE_USE_FINDERS = True
     WHITENOISE_AUTOREFRESH = True
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email settings for verification
-if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-else:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
-    EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
-    EMAIL_USE_TLS = True
-    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
-    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
-
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'noreply@bethuelportfolio.com')
+# Email Configuration for Production
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+ADMIN_EMAIL = os.getenv('ADMIN_EMAIL')
 
 # Login/Logout URLs
 LOGIN_URL = '/login/'

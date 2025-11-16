@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>🔐 Verify Login Code</h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-center mb-4">
+                        We've sent a 6-digit verification code to your email. 
+                        Please enter it below to complete your login.
+                    </p>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="code" class="form-label">Verification Code</label>
+                            <input type="text" class="form-control text-center" 
+                                   id="code" name="code" maxlength="6" 
+                                   placeholder="Enter 6-digit code" required
+                                   style="font-size: 1.5rem; letter-spacing: 0.5rem;">
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">
+                                ✅ Verify & Login
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div class="text-center mt-3">
+                        <small class="text-muted">
+                            Code expires in 10 minutes. 
+                            <a href="{% url 'login' %}">Back to Login</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Auto-focus and format code input
+document.getElementById('code').addEventListener('input', function(e) {
+    this.value = this.value.replace(/\D/g, '').substring(0, 6);
+});
+</script>
+{% endblock %}

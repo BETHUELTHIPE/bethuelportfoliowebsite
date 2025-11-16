@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}User Dashboard{% endblock %}
+{% block content1 %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div class="container">
+    <h2 class="mb-4">Welcome, {{ user.first_name }}!</h2>
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5>Profile</h5>
+                    <p>{{ user.email }}</p>
+                    <p>Member since: {{ user.date_joined|date:"M Y" }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5>Quick Actions</h5>
+                    <a href="{% url 'email_resume' %}" class="btn btn-primary mb-2">📧 Email Resume</a><br>
+                    <a href="{% url 'resume_page' %}" class="btn btn-success">📄 Download Resume</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5>Activity</h5>
+                    <p>Downloads: {{ download_count }}</p>
+                    <p>Emails Sent: {{ email_count }}</p>
+                    <p>Last login: {{ user.last_login|date:"M d, Y" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5>Your Activity</h5>
+                    <canvas id="userChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5>Download History</h5>
+                    <canvas id="downloadChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+new Chart(document.getElementById('userChart'), {
+    type: 'doughnut',
+    data: {
+        labels: ['Downloads', 'Remaining'],
+        datasets: [{
+            data: [{{ download_count }}, {{ 10 - download_count }}],
+            backgroundColor: ['#2563eb', '#e5e7eb']
+        }]
+    }
+});
+new Chart(document.getElementById('downloadChart'), {
+    type: 'line',
+    data: {
+        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+        datasets: [{
+            label: 'Downloads',
+            data: [0, 1, {{ download_count }}, {{ download_count }}],
+            borderColor: '#059669',
+            fill: false
+        }]
+    }
+});
+</script>
+{% endblock %}
