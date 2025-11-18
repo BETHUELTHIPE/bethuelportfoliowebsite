@@ -1,0 +1,109 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DEBUG=True
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/bethuel_portfolio
+      - REDIS_URL=redis://redis:6379/0
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=bethuel_portfolio
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PORT=5432
+      - EMAIL_HOST_USER=bethuelmoukangwe8@gmail.com
+      - EMAIL_HOST_PASSWORD=drlk qyno yvep mjkj
+      - DEFAULT_FROM_EMAIL=bethuelmoukangwe8@gmail.com
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/mediafiles
+      - .:/app
+    ports:
+      - "8001:8000"
+    depends_on:
+      - db
+      - redis
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/mediafiles
+    ports:
+      - "8080:80"
+    depends_on:
+      - web
+
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: bethuel_portfolio
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DEBUG=True
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/bethuel_portfolio
+      - REDIS_URL=redis://redis:6379/0
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=bethuel_portfolio
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PORT=5432
+    volumes:
+      - .:/app
+    command: celery -A portfolio worker -l info
+    depends_on:
+      - db
+      - redis
+
+  celery-beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DEBUG=True
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/bethuel_portfolio
+      - REDIS_URL=redis://redis:6379/0
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=bethuel_portfolio
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PORT=5432
+    volumes:
+      - .:/app
+    command: celery -A portfolio beat -l info
+    depends_on:
+      - db
+      - redis
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+
+volumes:
+  static_volume:
+  media_volume:
+  postgres_data:

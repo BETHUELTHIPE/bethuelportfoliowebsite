@@ -1,61 +1,27 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg animate__animated animate__fadeInDown shadow-sm" style="border-radius: 0 0 18px 18px;">
-    <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center" href="/">
-            <img src="{% static 'images/Github.png' %}" alt="Logo" width="36" height="36" class="me-2" style="border-radius:50%; box-shadow:0 2px 8px rgba(79,140,255,0.15);">
-            <span style="font-size: 2rem; font-weight: 700; letter-spacing: 0.05em; text-shadow: 0 2px 8px rgba(79,140,255,0.10);">Bethuel</span>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto" style="gap: 0.2rem;">
-                <li class="nav-item">
-                    <a class="nav-link {% if request.path == '/' %}active{% endif %}" aria-current="page" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if request.path == '/about/' %}active{% endif %}" href="{% url 'about' %}">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if request.path == '/projects/' %}active{% endif %}" href="{% url 'projects' %}">Projects</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if request.path == '/experience/' %}active{% endif %}" href="{% url 'experience' %}">Experience</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if request.path == '/certificate/' %}active{% endif %}" href='{% url "certificate" %}'>Certifications</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if '/blog/' in request.path %}active{% endif %}" href="{% url 'blog_list' %}">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if request.path == '/contact/' %}active{% endif %}" href="{% url 'contact' %}">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if request.path == '/resume-page/' %}active{% endif %}" href="{% url 'resume_page' %}">Resume</a>
-                </li>
-                {% if user.is_authenticated %}
-                    {% if user.is_superuser %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/analytics/' %}active{% endif %}" href="{% url 'analytics_dashboard' %}">📊 Analytics</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/send-announcement/' %}active{% endif %}" href="{% url 'send_announcement' %}">📢 Announce</a>
-                    </li>
-                    {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">Register</a>
-                </li>
-                {% endif %}
-            </ul>
-        </div>
+<nav class="navbar navbar-expand-lg site-header sticky-top">
+  <div class="container">
+    <a class="navbar-brand site-logo" href="{% url 'home' %}">Bethuel</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto main-navigation">
+        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'projects' %}">Projects</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'experience' %}">Experience</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'certificate' %}">Certificates</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'resume' %}">Resume</a></li>
+      </ul>
     </div>
+  </div>
 </nav>
-  

@@ -25,12 +25,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   </head>
     <body>
-    <header class="professional-header fade-in">
-      <h1 class="display-4 mb-2 hero-title scale-in">Bethuel Portfolio</h1>
-      <p class="lead mb-0 fade-in-delay-1 float">Web Developer | Educator</p>
-    </header>
     {% include "navbar.html" %}
-    <div class="container py-4">
+    <div class="container" style="padding-top: 100px; padding-bottom: 2rem;">
         {% block content1 %} {% endblock content1 %}
     </div>
 
@@ -48,16 +44,16 @@
         <a href="https://wa.me/27714156665" target="_blank" class="btn btn-success mx-2" aria-label="WhatsApp">
           <i class="fab fa-whatsapp"></i> WhatsApp
         </a>
-        <a href="https://www.linkedin.com/in/bethuel-moukangwe-93976a1a3" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+        <a href="https://www.linkedin.com/in/bethuel-moukangwe-93976a1a3" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="social-icon">
             <i class="fab fa-linkedin fa-2x"></i>
         </a>
-        <a href="https://www.youtube.com/@bethuelthipe-moukangwe7786" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+        <a href="https://www.youtube.com/@bethuelthipe-moukangwe7786" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="social-icon">
             <i class="fab fa-youtube fa-2x"></i>
         </a>
-        <a href="https://www.instagram.com/bethuelthipe" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <a href="https://www.instagram.com/bethuelthipe" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-icon">
             <i class="fab fa-instagram fa-2x"></i>
         </a>
-        <a href="https://github.com/BETHUELTHIPE/" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+        <a href="https://github.com/BETHUELTHIPE/" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="social-icon">
             <i class="fab fa-github fa-2x"></i>
         </a>
       </div>

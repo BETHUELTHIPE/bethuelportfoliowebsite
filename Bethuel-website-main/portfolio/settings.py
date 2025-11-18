@@ -13,6 +13,9 @@ except ImportError:
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# DEBUG setting
+DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
+
 # SECURITY WARNING: keep the secret key used in production secret!
 # For local development we read from the environment and fall back to a short
 # dev key to avoid extremely long literal lines that trip linters.
@@ -23,9 +26,6 @@ if not SECRET_KEY and not DEBUG:
 
 if not SECRET_KEY:
     SECRET_KEY = get_random_secret_key()
-
-# DEBUG setting
-DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
 
 # Security settings for production
 if not DEBUG:
@@ -61,7 +61,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_redis',
     'resume',  # Your app
 ]
 
@@ -129,19 +128,31 @@ else:
 REDIS_URL = os.getenv('REDIS_URL', 'redis://redis:6379/0')
 
 # Cache Configuration
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': REDIS_URL,
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+if os.getenv('REDIS_URL'):
+    try:
+        CACHES = {
+            'default': {
+                'BACKEND': 'django_redis.cache.RedisCache',
+                'LOCATION': REDIS_URL,
+                'OPTIONS': {
+                    'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+                }
+            }
+        }
+        SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+        SESSION_CACHE_ALIAS = 'default'
+    except ImportError:
+        CACHES = {
+            'default': {
+                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            }
+        }
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         }
     }
-}
-
-# Session Configuration
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-SESSION_CACHE_ALIAS = 'default'
 
 # Celery Configuration
 CELERY_BROKER_URL = REDIS_URL

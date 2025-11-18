@@ -1,85 +1,23 @@
-// Professional Animations JavaScript
-document.addEventListener('DOMContentLoaded', function() {
-    
-    // Animate elements on scroll
-    const animateOnScroll = () => {
-        const elements = document.querySelectorAll('.animate-on-scroll');
-        
-        elements.forEach(element => {
-            const elementTop = element.getBoundingClientRect().top;
-            const elementVisible = 150;
-            
-            if (elementTop < window.innerHeight - elementVisible) {
-                element.classList.add('animated');
-            }
-        });
-    };
-    
-    // Initial check and scroll listener
-    animateOnScroll();
-    window.addEventListener('scroll', animateOnScroll);
-    
-    // Form submission animation
-    const forms = document.querySelectorAll('form');
-    forms.forEach(form => {
-        form.addEventListener('submit', function(e) {
-            const submitBtn = form.querySelector('button[type="submit"]');
-            if (submitBtn) {
-                submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
-                submitBtn.disabled = true;
-            }
-        });
-    });
-    
-    // Add hover effects to cards
-    const cards = document.querySelectorAll('.card');
-    cards.forEach(card => {
-        card.classList.add('hover-lift');
-    });
-    
-    // Auto-hide alerts after 5 seconds
-    const alerts = document.querySelectorAll('.alert');
-    alerts.forEach(alert => {
-        setTimeout(() => {
-            alert.style.opacity = '0';
-            alert.style.transform = 'translateY(-20px)';
-            setTimeout(() => {
-                alert.remove();
-            }, 300);
-        }, 5000);
-    });
-    
-    // Smooth scroll for anchor links
-    const anchorLinks = document.querySelectorAll('a[href^="#"]');
-    anchorLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-});
-
-// Intersection Observer for better performance
-if ('IntersectionObserver' in window) {
+/**
+ * Animates elements on scroll using the Intersection Observer API.
+ *
+ * How it works:
+ * 1. It selects all elements with the class 'animate-on-scroll'.
+ * 2. An IntersectionObserver is created to watch these elements.
+ * 3. When an element enters the viewport (is 'intersecting'), the 'is-visible' class is added to it.
+ * 4. CSS transitions handle the animation from the initial state to the 'is-visible' state.
+ * 5. The observer stops watching the element after it has become visible to prevent re-animation.
+ */
+document.addEventListener('DOMContentLoaded', () => {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('animated');
-                observer.unobserve(entry.target);
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target); // Animate only once
             }
         });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    });
-    
-    document.querySelectorAll('.animate-on-scroll').forEach(el => {
-        observer.observe(el);
-    });
-}
+    }, { threshold: 0.1 }); // Trigger when 10% of the element is visible
+
+    const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
+    elementsToAnimate.forEach(element => observer.observe(element));
+});

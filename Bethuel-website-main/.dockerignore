@@ -1,9 +1,15 @@
-env/
-.env
-*.pyc
-__pycache__/
-.git/
+# Git
+.git
 .gitignore
-README.md
-.vscode/
-node_modules/
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Environment
+.env*
+.venv
+
+# Python
+__pycache__/
+*.pyc
